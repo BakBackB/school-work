@@ -1,0 +1,76 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Principles of Database Management}}}
+\fancyhead[R]{\textbf{\textit{Lab 2}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\usepackage{array}
+\newcommand{\query}[4]{
+	\Large Query: #1
+	\begin{itemize}
+		\item \large \textbf{Query}:\par
+		\includegraphics[scale=1]{#2}
+		\item \large \textbf{Tree}:\par
+		\includegraphics[scale=1]{#3}
+		\item \large \textbf{Result}:\par
+		\includegraphics[scale=1]{#4}
+	\end{itemize}
+	}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Principles Of Database Management} \large{LAB 2}
+		\end{center}
+		\vspace*{\fill}
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+	\begin{enumerate}
+		\item \query{List the names of all female employees.}{q1}{t1}{r1}
+		\newpage
+		\item \query{List the names of all employees along with their department names.}{q2}{t2}{r2}
+		\newpage
+		\item \query{List the names of all departments along with their manager's social security number.}{q3}{t3}{r3}
+		\newpage
+		\item \query{Find the average salary of employees in each department.}{q4}{t4}{r4}
+		\newpage
+		\item \query{List the names of employees who don't work on any projects.}{q5}{t5}{r5}
+		\newpage
+		\item \query{List the names of all employees and their dependents.}{q6}{t6}{r6}
+		\newpage
+		\item \query{List the names of employees who are also managers of departments.}{q7}{t7}{r7}
+		\newpage
+		\item \query{Find the names of all employees who work on every project.}{q8}{t8}{r8}
+		\newpage
+		\item \query{Find the names of employees with the same supervisor as the employee with social security number '123456789'.}{q9}{t9}{r9}
+	\end{enumerate}
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}

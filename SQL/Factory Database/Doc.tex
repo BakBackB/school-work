@@ -1,0 +1,561 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{xcolor,listings}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Principles of Database Management}}}
+\fancyhead[R]{\textbf{\textit{Lab 4}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\usepackage{array}
+\newcommand{\query}[1]{
+	\textbf{Query}: #1\par
+	\textbf{SQL}:
+}
+\newcommand{\result}[1]{
+	\textbf{Result set}:\par 
+	\includegraphics[width = 0.45\textwidth]{#1}
+}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Principles Of Database Management} \large{LAB 4}
+		\end{center}
+		\vspace*{\fill}
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+	\section*{Basic Queries}
+	\begin{enumerate}
+		\item \query{Write a query to list the names of all employees.}
+		\begin{lstlisting}[
+			language=SQL,
+			showspaces=false,
+			basicstyle=\ttfamily,
+			numbers=left,
+			numberstyle=\tiny,
+			commentstyle=\color{gray}
+			]
+SELECT 
+  fname,
+  minit,
+  lname
+FROM 
+  employee;
+		\end{lstlisting}
+		\result{r1}
+		\item \query{Write a query to list the names of all female employees.}
+		\begin{lstlisting}[
+			language=SQL,
+			showspaces=false,
+			basicstyle=\ttfamily,
+			numbers=left,
+			numberstyle=\tiny,
+			commentstyle=\color{gray}
+			]
+SELECT 
+  fname,
+  minit,
+  lname
+FROM 
+  employee
+WHERE 
+  sex = 'F';
+		\end{lstlisting}
+		\result{r2}
+	\item \query{Write a query to list the names of all employees along with their department names.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  fname, 
+  minit, 
+  lname, 
+  dname
+FROM 
+  employee,
+  department
+WHERE 
+  employee.dno = department.dnumber; 		
+	\end{lstlisting}
+	\result{r3}
+	\item \query{Write a query to list the names of all departments along with their manager’s social security number.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  dname, 
+  mgrssn
+FROM 
+  department;		
+	\end{lstlisting}
+	\result{r4}	
+	\end{enumerate}
+	\section*{Aggregate Functions}
+	\begin{enumerate}[start=5]
+		\item \query{Write a query to find the average salary of employees in each department.}
+		\begin{lstlisting}[
+			language=SQL,
+			showspaces=false,
+			basicstyle=\ttfamily,
+			numbers=left,
+			numberstyle=\tiny,
+			commentstyle=\color{gray}
+			]
+SELECT 
+  dname,
+  AVG(salary) AS avg_salary
+FROM 
+  department, 
+  employee
+WHERE 
+  department.dnumber = employee.dno
+GROUP BY 
+  dname;			
+		\end{lstlisting}
+		\result{r5}
+		\item \query{Write a query to list the names of employees who don’t work on any projects.}
+		\begin{lstlisting}[
+			language=SQL,
+			showspaces=false,
+			basicstyle=\ttfamily,
+			numbers=left,
+			numberstyle=\tiny,
+			commentstyle=\color{gray}
+			]
+SELECT 
+  fname,
+  minit,
+  lname
+FROM 
+  employee
+WHERE 
+  ssn NOT IN (
+    SELECT 
+      essn
+    FROM 
+      works_on
+    );			
+		\end{lstlisting}
+		\result{r6}
+	\item \query{Write a query to list the names of all employees and their dependents.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  fname,
+  minit,
+  lname,
+  dependent_name
+FROM 
+  employee,
+  dependent
+WHERE 
+  ssn = essn;   		
+	\end{lstlisting}
+	\result{r7}
+	\item \query{Write a query to list the names of employees who are also managers of departments.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  fname,
+  minit,
+  lname
+FROM
+  employee,
+  department
+WHERE   
+  ssn = mgrssn;		
+	\end{lstlisting}
+	\result{r8}
+	\item \query{Write a query to find the names of all employees who work on every project.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  fname, 
+  minit, 
+  lname
+FROM 
+  employee AS e
+WHERE 
+  NOT EXISTS (
+    SELECT 
+      pnumber
+    FROM 
+      project AS p
+    WHERE 
+      NOT EXISTS (
+        SELECT 
+          w.essn
+        FROM 
+          works_on AS w
+        WHERE 
+          w.essn = e.ssn AND 
+          w.pno = p.pnumber
+      )
+    );		
+	\end{lstlisting}
+	\result{r9}
+	\item \query{Write a query to find the names of employees with the same supervisor as the employee with social security number ‘123456789’.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  fname,
+  minit,
+  lname
+FROM
+  employee
+WHERE 
+  superssn IN (
+    SELECT 
+      superssn
+    FROM 
+      employee
+    WHERE 
+      ssn = '123456789'
+  );		
+	\end{lstlisting}
+	\result{r10}
+	\end{enumerate}
+	\section*{Complex Queries}
+	\begin{enumerate}[start = 11]
+		\item \query{Write a query to retrieve the names of all employees in department 5 who work more than 10 hours per week on the ‘ProductX’ project.
+		}
+		\begin{lstlisting}[
+			language=SQL,
+			showspaces=false,
+			basicstyle=\ttfamily,
+			numbers=left,
+			numberstyle=\tiny,
+			commentstyle=\color{gray}
+			]
+SELECT 
+  fname,
+  minit,
+  lname
+FROM 
+  employee
+WHERE 
+  dno IN (
+    SELECT 
+      dnumber
+    FROM 
+      department
+    WHERE
+      dnumber = 5
+    ) 
+    AND ssn IN (
+      SELECT 
+        essn
+      FROM 
+        works_on
+      WHERE
+        hours > 10
+      AND pno IN (
+        SELECT 
+          pno
+        FROM 
+          project
+        WHERE
+          pname = 'ProductX'
+      )
+    );			
+		\end{lstlisting}
+		\result{r11}
+	\item \query{Write a query to list the names of all employees who have a dependent with the same first name as themselves.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  e.fname,
+  e.minit,
+  e.lname
+FROM
+  employee AS e
+INNER JOIN dependent AS d ON e.ssn = d.essn
+WHERE 
+  e.fname = d.dependent_name; 		
+	\end{lstlisting}
+	\result{r12}
+	\item \query{Write a query to find the names of all employees who are directly supervised by ‘Franklin Wong’.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  fname,
+  minit,
+  lname
+FROM
+  employee
+WHERE superssn IN (
+  SELECT 
+    ssn
+  FROM
+    employee
+  WHERE 
+    fname = 'Frank'
+    AND lname = 'Wong' 
+  );		
+	\end{lstlisting}
+	\result{r13}
+	\item \query{Write a query to list, for each project, the project name and the total hours per week spent on that project by all employees.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  pname,
+  SUM(hours) AS total_hours
+FROM works_on INNER JOIN works_on ON project.pnumber = works_on.pno
+GROUP BY 
+  pname;		
+	\end{lstlisting}
+	\result{r14}
+	\item \query{Write a query to retrieve the names of all employees who work on every project.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  fname, 
+  minit, 
+  lname
+FROM 
+  employee AS e
+WHERE 
+  NOT EXISTS (
+    SELECT 
+      pnumber
+    FROM 
+      project AS p
+    WHERE 
+      NOT EXISTS (
+        SELECT 
+          w.essn
+        FROM 
+          works_on AS w
+        WHERE 
+          w.essn = e.ssn AND 
+          w.pno = p.pnumber
+      )
+    );				
+	\end{lstlisting}
+	\result{r15}
+	\item \query{Write a query to list the names of employees who do not work on any projects.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  fname,
+  minit,
+  lname
+FROM 
+  employee
+WHERE 
+  ssn NOT IN (
+    SELECT 
+      essn
+    FROM 
+      works_on
+    );			
+	\end{lstlisting}
+	\result{r16}
+	\end{enumerate}
+	\section*{Advanced Queries}
+	\begin{enumerate}[start = 17]
+		\item \query{Write a query to retrieve the average salary of all female employees.}
+		\begin{lstlisting}[
+			language=SQL,
+			showspaces=false,
+			basicstyle=\ttfamily,
+			numbers=left,
+			numberstyle=\tiny,
+			commentstyle=\color{gray}
+			]
+SELECT
+  fname,
+  minit,
+  lname,
+  AVG(salary)
+FROM 
+  employee
+WHERE 
+  sex = 'F'
+GROUP BY   
+  fname,
+  minit,
+  lname			
+		\end{lstlisting}
+		\result{r17}
+	\item \query{Write a query to find the names and addresses of all employees who work on at least one project located in Houston but whose department has no location in Houston.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT
+  fname,
+  minit,
+  lname,
+  address
+FROM 
+  employee
+WHERE
+  ssn IN (
+    SELECT 
+      essn
+    FROM 
+      works_on
+    WHERE 
+      pno IN (
+        SELECT 
+          pnumber
+        FROM
+          project
+        WHERE
+          plocation = 'Houston'
+      )
+    )
+  AND dno NOT IN (
+    SELECT 
+      dnumber
+    FROM 
+      dept_locations
+    WHERE
+      dlocation = 'Houston'
+  );		
+	\end{lstlisting}
+	\result{r18}
+	\item \query{Write a query to list the last names of all department managers who have no dependents.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT 
+  lname
+FROM 
+  employee, 
+  department 
+WHERE 
+  ssn = mgrssn
+  AND ssn NOT IN (
+    SELECT 
+      essn
+    FROM 
+      dependent
+  )
+	\end{lstlisting}
+	\result{r19}
+	\item \query{Write a query to retrieve, for each department whose average employee salary is more than 30000, the department name and the number of employees working for that department.}
+	\begin{lstlisting}[
+		language=SQL,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+SELECT
+  dname,
+  COUNT(ssn)
+FROM 
+  employee INNER JOIN department ON employee.dno = department.dnumber
+GROUP BY 
+  dname
+HAVING 
+  AVG(salary) > 30000 		
+	\end{lstlisting}
+	\result{r20}
+	\end{enumerate}
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}

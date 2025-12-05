@@ -1,0 +1,235 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{xcolor,listings}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Principles of Database Management}}}
+\fancyhead[R]{\textbf{\textit{Lab 6 \& 7}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\definecolor{backcolour}{RGB}{246,246,246}
+\definecolor{codepurple}{RGB}{0,206,209}
+\usepackage{array}
+\newcommand{\query}[1]{
+	\textbf{Query}: #1\par
+	\textbf{SQL}:
+}
+\newcommand{\result}[1]{
+	\textbf{Result set}:\par 
+	\includegraphics[width = 0.9425\textwidth]{#1}
+}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Principles Of Database Management} \large{LAB 6 \& 7}
+		\end{center}
+		\vspace*{\fill}
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+\begin{enumerate}
+\item \query{Finds the title, editionNumber, and copyright of all titles with copyright after 2000.}
+\begin{lstlisting}[
+	backgroundcolor=\color{backcolour}, 
+	language=SQL,
+	keywordstyle=\color{codepurple},
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+SELECT
+  title,
+  editionNumber,
+  copyright
+FROM titles
+WHERE copyright >= 2000;
+GO	
+\end{lstlisting}
+\result{r1}
+\item \query{Finds authorID, firstName, and lastName from the authors whose last name contains I as the second letter.}
+\begin{lstlisting}[
+	backgroundcolor=\color{backcolour}, 
+	language=SQL,
+	keywordstyle=\color{codepurple},
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+SELECT
+  authorID,
+  firstName,
+  lastName
+FROM authors
+WHERE lastName LIKE '_i%'; 
+GO	
+\end{lstlisting}
+\result{r2}
+\item \query{Finds isbn, title, editionNumber, copyright, and price of titles whose titles end with “how to program” in ascending order by title. }
+\begin{lstlisting}[
+	backgroundcolor=\color{backcolour}, 
+	language=SQL,
+	keywordstyle=\color{codepurple},
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+SELECT
+  isbn,
+  title,
+  editionNumber,
+  copyright,
+  price
+FROM titles
+WHERE title LIKE '% How to Program'
+ORDER BY title; 
+GO		
+\end{lstlisting}
+\result{r3}
+\item \query{Finds firstName, lastName, and isbn for the authors and the books they have written in ascending order by lastName and firstName.}
+\begin{lstlisting}[
+	backgroundcolor=\color{backcolour}, 
+	language=SQL,
+	keywordstyle=\color{codepurple},
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+SELECT
+  firstName,
+  lastName,
+  t.isbn,
+  title
+FROM authors AS a INNER JOIN authorISBN AS aISBN
+ON a.authorID = aISBN.authorID
+INNER JOIN titles AS t 
+ON aISBN.isbn = t.isbn
+ORDER BY lastName, firstName; 
+GO
+\end{lstlisting}
+\result{r4}
+\item \query{How many books were copyright in 2001.}
+\begin{lstlisting}[
+	backgroundcolor=\color{backcolour}, 
+	language=SQL,
+	keywordstyle=\color{codepurple},
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+SELECT COUNT(copyright) AS num_of_copyright
+FROM titles
+WHERE copyright = 2001; 
+GO	
+\end{lstlisting}
+\result{r5}
+\item \query{Finds the name of books which have. published by Prentice Hall PTG.}
+\begin{lstlisting}[
+	backgroundcolor=\color{backcolour}, 
+	language=SQL,
+	keywordstyle=\color{codepurple},
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+SELECT title
+FROM titles
+WHERE publisherID IN (
+  SELECT publisherID
+  FROM publishers
+  WHERE publisherName = 'Prentice Hall PTG'
+  );
+GO	
+\end{lstlisting}
+\result{r6}
+\item \query{Finds the author names who've the books with the highest price.}
+\begin{lstlisting}[
+	backgroundcolor=\color{backcolour}, 
+	language=SQL,
+	keywordstyle=\color{codepurple},
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+SELECT
+  firstName,
+  lastName,
+  t.isbn,
+  title
+FROM authors AS a INNER JOIN authorISBN AS aISBN 
+ON a.authorID = aISBN.authorID
+INNER JOIN titles AS t 
+ON aISBN.isbn = t.isbn
+WHERE price IN (
+  SELECT MAX(price)
+  FROM titles
+  );
+GO	
+\end{lstlisting}
+\result{r7}
+\item \query{Finds name of authors who've published more than 2 books.}
+\begin{lstlisting}[
+	backgroundcolor=\color{backcolour}, 
+	language=SQL,
+	keywordstyle=\color{codepurple},
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+SELECT
+  aISBN.authorID,
+  firstName,
+  lastName,
+  COUNT(aISBN.authorID) AS num_published_book
+FROM authors AS a INNER JOIN authorISBN AS aISBN 
+ON a.authorID = aISBN.authorID
+GROUP BY aISBN.authorID, firstName, lastName
+HAVING COUNT(aISBN.authorID) > 2;
+GO	
+\end{lstlisting}
+\result{r8}
+	\end{enumerate}
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}
