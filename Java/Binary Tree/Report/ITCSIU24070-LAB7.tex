@@ -1,0 +1,90 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Algorithms \& Data Structures}}}
+\fancyhead[R]{\textbf{\textit{Lab 7}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\usepackage{array}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Algorithms \& Data Structures} \large{LAB 7}
+		\end{center}
+		\vfill
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+	\section{Add a method that counts the elements in a binary tree into the Tree Class. Specifically, the method takes no parameters and returns an integer equal to the number of elements in the tree.}
+	\begin{center}
+		\includegraphics[width = \textwidth]{1}
+	\end{center}
+	\section{Add a method that computes the height of a binary tree into the Tree Class. Specifically, this method has no parameters and returns an integer equal to the height of the tree.}
+	\begin{center}
+		\includegraphics[width = \textwidth]{2}
+	\end{center}
+	\section{Add a method that counts a binary tree’s leaves tree into the Tree Class. Specifically, this method has no parameters and returns an integer equal to the number of leaves in the tree.}
+	\begin{center}
+		\includegraphics[width = \textwidth]{3}
+	\end{center}
+	\section{Add a method that determines whether a binary tree is fully balanced. This method takes no parameters and returns a Boolean value: true if the tree is fully balanced and false if not.}
+	\begin{center}
+		\includegraphics[width = \textwidth]{4}
+	\end{center}
+	\section{Define two binary trees to be identical if both are empty or their roots are equal, their left subtrees are identical, and their right subtrees are identical. Design a method that determines whether two binary trees are identical (this method takes a second binary tree as its only parameter and returns a Boolean value: true if the tree receiving the message is identical to the parameter, and false otherwise).}
+	\begin{center}
+		\includegraphics[width = \textwidth]{5}
+	\end{center}
+	\section{Huffman coding}
+	\begin{center}
+		\includegraphics[width = \textwidth]{6}
+	\end{center}
+	\section{TreeApp.java}
+	\begin{itemize}
+		\item During the implementation, counters were added to measure the number of comparisons performed by each operation.\par
+		
+		find(): The number of comparisons grows proportionally to the height of the tree. In a well-balanced BST, this is O(log n), but in an unbalanced tree it can degrade to O(n).\par
+		
+		insert(): Similar to find(), insertion compares keys while traversing down the tree. Efficiency is also O(h), where h is the height.\par
+		
+		delete(): Deletion requires locating the node and then adjusting the structure (handling 0, 1, or 2 children). Its comparisons remain O(h), but are typically slightly higher than find() and insert() due to structural adjustments.\par
+		\item \begin{center}
+			\includegraphics[width = 0.85\textwidth]{7}
+		\end{center}
+		\item \begin{center}
+			\includegraphics[width = 0.85\textwidth]{8}
+		\end{center}
+		\item \begin{center}
+			\includegraphics[width = 0.85\textwidth]{9}
+		\end{center}
+		\item Different traversals create significantly different BST shapes, proving that traversal sequences do not preserve structural information. Only the set of values is preserved, not the tree’s shape.
+	\end{itemize}
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}

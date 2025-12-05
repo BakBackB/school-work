@@ -1,0 +1,425 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Algorithms \& Data Structures}}}
+\fancyhead[R]{\textbf{\textit{Lab 2}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\usepackage{array}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Algorithms \& Data Structures} \large{LAB 2}
+		\end{center}
+		\vspace*{\fill}
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+	\section{Problem 1}
+	\includegraphics[scale=1]{bubble}
+	\begin{verbatim}
+		
+		// demonstrates bubble sort
+		// to run this program: C>java BubbleSortApp
+		////////////////////////////////////////////////////////////////
+		class ArrayBub {
+			private long[] a; // ref to array a
+			private int nElems; // number of data items
+			private int nSwaps; // number of swaps
+			private int nComparison;
+			// --------------------------------------------------------------
+			
+			public ArrayBub(int max) // constructor
+			{
+				a = new long[max]; // create the array
+				nElems = 0; // no items yet
+				nSwaps = 0; // no swaps yet
+				nComparison = 0;
+			}
+			
+			// --------------------------------------------------------------
+			public void insert(long value) // put element into array
+			{
+				a[nElems] = value; // insert it
+				nElems++; // increment size
+			}
+			
+			// --------------------------------------------------------------
+			public void display() // displays array contents
+			{
+				for (int j = 0; j < nElems; j++) // for each element,
+				System.out.print(a[j] + " "); // display it
+				System.out.println("");
+			}
+			
+			// --------------------------------------------------------------
+			public void bubbleSort() {
+				int out, in;
+				
+				for (out = nElems - 1; out > 1; out--) // outer loop (backward)
+				for (in = 0; in < out; in++) {// inner loop (forward)
+					nComparison++;
+					if (a[in] > a[in + 1]) // out of order?
+					swap(in, in + 1); // swap them
+				}
+			} // end bubbleSort()
+			// --------------------------------------------------------------
+			
+			private void swap(int one, int two) {
+				long temp = a[one];
+				a[one] = a[two];
+				a[two] = temp;
+				
+				nSwaps++; // increase number of swap by 1
+			}
+			
+			public int getSwapNumber() {
+				return nSwaps;
+			}
+			
+			public int getnComparison() {
+				return nComparison;
+			}
+			// --------------------------------------------------------------
+		} // end class ArrayBub
+		////////////////////////////////////////////////////////////////
+		
+		class BubbleSortApp {
+			public static void main(String[] args) {
+				int maxSize = 100; // array size
+				ArrayBub arr; // reference to array
+				arr = new ArrayBub(maxSize); // create the array
+				
+				arr.insert(77); // insert 10 items
+				arr.insert(99);
+				arr.insert(44);
+				arr.insert(55);
+				arr.insert(22);
+				arr.insert(88);
+				arr.insert(11);
+				arr.insert(00);
+				arr.insert(66);
+				arr.insert(33);
+				System.out.print("Items before sorting: ");      
+				arr.display(); // display items
+				System.out.print("Items after sorting: ");
+				arr.bubbleSort(); // bubble sort them
+				
+				arr.display(); // display them again
+				
+				// display the number of swaps
+				System.out.println("The number of swaps = " + arr.getSwapNumber());
+				System.out.println("The number of comparison = " + arr.getnComparison());
+				System.out.println("The number of comparison after each loop in this sort algorithm is (n-1)--.\nBy taking the sum of them, we have a theoretical formula for complexity n(n-1)/2.\nHowever, in the output, the number of comparison is n(n-1)/2 - 1 since we skip the step 'out = 0'.");
+				System.out.println("If we modified the sort method to have the check sorted array condition, we can achieve the best case, where the array is already sorted in a desired order. The time complexity is n for running only the outer loop");
+				
+			} // end main()
+		} // end class BubbleSortApp
+		////////////////////////////////////////////////////////////////
+		
+	\end{verbatim}
+	\section{Problem 2}
+	\begin{verbatim}
+		// selectSort.java
+		// demonstrates selection sort
+		// to run this program: C>java SelectSortApp
+		////////////////////////////////////////////////////////////////
+		class ArraySel
+		{
+			private long[] a;                 // ref to array a
+			private int nElems;               // number of data items
+			private int nComparison;
+			//--------------------------------------------------------------
+			public ArraySel(int max)          // constructor
+			{
+				a = new long[max];                 // create the array
+				nElems = 0;                        // no items yet
+			}
+			//--------------------------------------------------------------
+			public void insert(long value)    // put element into array
+			{
+				a[nElems] = value;             // insert it
+				nElems++;                      // increment size
+			}
+			//--------------------------------------------------------------
+			public void display()             // displays array contents
+			{
+				for(int j=0; j<nElems; j++)       // for each element,
+				System.out.print(a[j] + " ");  // display it
+				System.out.println("");
+			}
+			//--------------------------------------------------------------
+			public void selectionSort()
+			{
+				int out, in, min;
+				
+				for(out=0; out<nElems-1; out++)   // outer loop
+				{
+					min = out;                     // minimum
+					for(in=out+1; in<nElems; in++) {// inner loop
+						nComparison++;
+						if(a[in] < a[min] ) {        // if min greater,
+							min = in;               // we have a new min
+						}
+						swap(out, min);                // swap them
+					}
+				}  // end for(out)
+				System.out.println("-------------------------------------------");
+			}  // end selectionSort()
+			//--------------------------------------------------------------
+			private void swap(int one, int two)
+			{
+				long temp = a[one];
+				a[one] = a[two];
+				a[two] = temp;
+			}
+			//--------------------------------------------------------------
+			public int getnComparison() {
+				return nComparison;
+			}
+		}  // end class ArraySel
+		////////////////////////////////////////////////////////////////
+		class SelectSortApp
+		{
+			public static void main(String[] args)
+			{
+				int maxSize = 100;            // array size
+				ArraySel arr;                 // reference to array
+				arr = new ArraySel(maxSize);  // create the array
+				
+				arr.insert(77);               // insert 10 items
+				arr.insert(99);
+				arr.insert(44);
+				arr.insert(55);
+				arr.insert(22);
+				arr.insert(88);
+				arr.insert(11);
+				arr.insert(00);
+				arr.insert(66);
+				arr.insert(33);
+				
+				arr.display();                // display items
+				System.out.println("-------------------------------------------");
+				System.out.println("The items that are swapped are: ");
+				arr.selectionSort();          // selection-sort them
+				
+				arr.display();                // display them again
+				System.out.println("We don't always need to swap elements. Consider a case where the minium number is already correct with its position, the swap still unecessarily processes");
+				System.out.println("The number of comparison = " + arr.getnComparison());
+				System.out.println("The number of comparison after each loop in this sort algorithm is (n-1)--.\nBy taking the sum of them, we have a theoretical formula for complexity n(n-1)/2 in both worst or best cases as we always use swap operation in each outer loop");
+			}  // end main()
+		}  // end class SelectSortApp
+		////////////////////////////////////////////////////////////////
+		
+	\end{verbatim}
+	\includegraphics[scale=1]{sel1}\par
+	\includegraphics[scale=1]{sel2}\par
+	\includegraphics[scale=1]{sel3}\par
+	\section{Problem 3}
+	\begin{verbatim}
+		// insertSort.java
+		// demonstrates insertion sort
+		// to run this program: C>java InsertSortApp
+		//--------------------------------------------------------------
+		class ArrayIns
+		{
+			private long[] a;                 // ref to array a
+			private int nElems;               // number of data items
+			private int nPass = 0, totalPass = 0;
+			//--------------------------------------------------------------
+			public ArrayIns(int max)          // constructor
+			{
+				a = new long[max];                 // create the array
+				nElems = 0;                        // no items yet
+			}
+			//--------------------------------------------------------------
+			public void insert(long value)    // put element into array
+			{
+				a[nElems] = value;             // insert it
+				nElems++;                      // increment size
+			}
+			//--------------------------------------------------------------
+			public void display()             // displays array contents
+			{
+				for(int j=0; j<nElems; j++)       // for each element,
+				System.out.print(a[j] + " ");  // display it
+				System.out.println("");
+			}
+			//--------------------------------------------------------------
+			public void insertionSort()
+			{
+				int in, out;
+				
+				for(out=1; out<nElems; out++)     // out is dividing line
+				{
+					long temp = a[out];            // remove marked item
+					in = out;
+					totalPass++;                   // start shifts at out
+					while(in>0 && a[in-1] >= temp) // until one is smaller,
+					{
+						totalPass++;
+						nPass++;
+						a[in] = a[in-1];            // shift item to right
+						--in;                       // go left one position
+					}
+					a[in] = temp;                  // insert marked item
+					
+				}  // end for
+			}  // end insertionSort()
+			public int getnPass() {
+				return nPass;
+			}
+			public int getTotalPass() {
+				return totalPass;
+			}
+			//--------------------------------------------------------------
+		}  // end class ArrayIns
+		////////////////////////////////////////////////////////////////
+		class InsertSortApp
+		{
+			public static void main(String[] args)
+			{
+				int maxSize = 100;            // array size
+				ArrayIns arr;                 // reference to array
+				arr = new ArrayIns(maxSize);  // create the array
+				
+				arr.insert(77);               // insert 10 items
+				arr.insert(99);
+				arr.insert(44);
+				arr.insert(55);
+				arr.insert(22);
+				arr.insert(88);
+				arr.insert(11);
+				arr.insert(00);
+				arr.insert(66);
+				arr.insert(33);
+				
+				arr.display();                // display items
+				
+				arr.insertionSort();          // insertion-sort them
+				System.out.println("Number of pass in the inner loops (Number of copies) = " + arr.getnPass());
+				System.out.println("Total number of pass (Both inner and outer loops) = " + arr.getTotalPass());
+				System.out.println("The number of pass in the inner loop is 1 + 2 + 3 + ... + n - 1 = n(n-1)/2 in the worst case, where the array is already sorted in reversed order. However, in the average case, where the array is half sorted, the time complexity is n(n-1)/4");
+			}  // end main()
+		}  // end class InsertSortApp
+		
+	\end{verbatim}
+	\includegraphics[scale=1]{ins}
+	\section{Problem 4}
+	\begin{itemize}
+		\item For $10000$ items\par\includegraphics[scale=1]{sort1}
+		\item For $15000$ items\par\includegraphics[scale=1]{sort2}
+		\item For $20000$ items\par\includegraphics[scale=1]{sort3}
+		\item For $25000$ items\par\includegraphics[scale=1]{sort4}
+		\item For $30000$ items\par\includegraphics[scale=1]{sort5}
+		\item For $35000$ items\par\includegraphics[scale=1]{sort6}
+		\item For $40000$ items\par\includegraphics[scale=1]{sort7}
+		\item For $45000$ items\par\includegraphics[scale=1]{sort8}
+		\item For $50000$ items\par\includegraphics[scale=1]{sort9}
+	\end{itemize}
+	Table for analyzing:\par
+	\includegraphics[scale = 0.75]{table}\par
+	This table shows the number of COPIES/COMPARISONS/SWAPS with respect to number of elements in the arrays. As illustrated on the table, bubble sort take the most number of operators among the others, in contrast to insertion sort.
+	\section{Problem 5}
+	\begin{verbatim}
+		public class Student implements Comparable<Student>
+		{
+			private String fname, lname;
+			private int grade;
+			
+			public Student(String fname, String lname, int grade)
+			{
+				this.fname = fname;
+				this.lname = lname;
+				this.grade = grade;
+			}
+			
+			public String toString()
+			{
+				return fname + " " + lname + "\t" + grade;
+			}
+			
+			// compare by grade (lower grade => negative), then by last name, then first name
+			@Override
+			public int compareTo(Student other)
+			{
+				if (other == null) return 1;
+				int gradeCompare = Integer.compare(this.grade, other.grade);
+				if (gradeCompare != 0) return gradeCompare;
+				int lnameCompare = this.lname.compareTo(other.lname);
+				if (lnameCompare != 0) return lnameCompare;
+				return this.fname.compareTo(other.fname);
+			}
+			
+			public static void insertionSortStudent(Student[] a, int nElems)
+			{
+				int in, out;
+				
+				for(out=1; out<nElems; out++)     // out is dividing line
+				{
+					Student temp = a[out];            // remove marked item
+					in = out;                      // start shifts at out
+					while(in>0 && a[in-1].compareTo(temp)>0) // until one is smaller,
+					{
+						a[in] = a[in-1];            // shift item to right
+						--in;                       // go left one position
+					}
+					a[in] = temp;                  // insert marked item
+				}  // end for
+			}  // end insertionSort()
+			public static void displayStudents(Student[] a, int nElems)
+			{
+				for(int j=0; j<nElems; j++)       // for each element,
+				System.out.println(a[j]);  // display it
+				System.out.println("");
+			}
+			
+			public static void main(String[] args)
+			{
+				Student[] students = new Student[10];
+				students[0] = new Student("John", "Doe", 90);
+				students[1] = new Student("Jane", "Smith", 85);
+				students[2] = new Student("Alice", "Johnson", 92);
+				students[3] = new Student("Bob", "Brown", 78);
+				students[4] = new Student("Charlie", "Davis", 88);
+				students[5] = new Student("Eve", "Miller", 95);
+				students[6] = new Student("Frank", "Wilson", 80);
+				students[7] = new Student("Grace", "Moore", 89);
+				students[8] = new Student("Henry", "Taylor", 91);
+				students[9] = new Student("Ivy", "Anderson", 87);
+				Student.displayStudents(students, 10);
+				Student.insertionSortStudent(students, 10);
+				Student.displayStudents(students, 10);
+			}
+		}
+		
+	\end{verbatim}
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}

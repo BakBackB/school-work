@@ -1,0 +1,80 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Algorithms \& Data Structures}}}
+\fancyhead[R]{\textbf{\textit{Lab 4}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\usepackage{array}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Algorithms \& Data Structures} \large{LAB 4}
+		\end{center}
+		\vspace*{\fill}
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+	\section*{LinkList2App.java}
+	\textbf{Add a method insertAfter to insert after a particular item in this list}
+	\begin{center}
+		\includegraphics[width = 0.75\textwidth]{1}
+	\end{center}
+	\section*{LinkStackApp.java}
+	\textbf{Write an application to reverse a list using a stack}
+	\begin{center}
+		\includegraphics[width = 0.75\textwidth]{2}
+	\end{center}
+	\section*{LinkQueueApp.java}
+	\begin{itemize}
+		\item \textbf{Create a new remove() method that removes item N after N calls to the method.}
+		\begin{center}
+			\includegraphics[width = 0.75\textwidth]{3_1}
+		\end{center}
+		\item \textbf{Simulate a queue of customers each one served for a random amount of time.}
+		\begin{center}
+			\includegraphics[width = 0.75\textwidth]{3_2}\par
+			\includegraphics[width = 0.75\textwidth]{3_3}
+		\end{center}
+		\item \textbf{Add a size() method and investigate how simulation is affected by the time needed to serve a customer and the rate at which customers join the queue.}
+		\begin{center}
+			\includegraphics[width = 0.75\textwidth]{3_4}
+		\end{center}
+		If the range of time processing is more narrowed than the arrival time, the waiting time processing time only takes processing time into account, meaning the customers do not have to wait for the queue.
+	\end{itemize}
+
+	\section*{Josephus Problem}
+	\begin{center}
+		\includegraphics[width = 0.75\textwidth]{4_1}
+		\includegraphics[width = 0.75\textwidth]{4_2}
+	\end{center}
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}

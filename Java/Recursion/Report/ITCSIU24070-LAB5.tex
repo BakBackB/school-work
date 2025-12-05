@@ -1,0 +1,240 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{listings}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Algorithms \& Data Structures}}}
+\fancyhead[R]{\textbf{\textit{Lab 5}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\usepackage{array}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Algorithms \& Data Structures} \large{LAB 5}
+		\end{center}
+		\vspace*{\fill}
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+	\section*{Problem 1: Use the following function puzzle(..) to answer problems 1 - 3.}
+	\begin{lstlisting}[
+		language=Java,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+int puzzle(int base, int limit)
+{ //base and limit are nonnegative numbers
+	if ( base > limit )
+	return -1;
+	else if ( base == limit )
+	return 1;
+	else
+	return base * puzzle(base + 1, limit);
+}
+	\end{lstlisting}
+	\subsection*{Identify the base case(s) of function puzzle(..)}
+	We have already known that the base case define the condition that stops the function from recalling itself again. Therefore, there are two base cases in the given code, which are:
+	\begin{lstlisting}[
+	language=Java,
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+if ( base > limit )
+return -1;
+else if ( base == limit )
+return 1;
+\end{lstlisting}
+	\subsection*{Identify the recursive case(s) of function puzzle(..)}
+	Since the recursive case recall itself again, we can easily find it in the given code:
+	\begin{lstlisting}[
+	language=Java,
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+else
+	return base * puzzle(base + 1, limit);
+	\end{lstlisting}
+	\subsection*{What displayed}
+	\begin{enumerate}[label = \alph*.]
+		\item System.out.println(puzzle(14,10))\par
+		Since $base (14) > limit (10)$ - base case, the prinln() method will display $-1$
+		\item System.out.println(puzzle(4,7))\par
+		Since $base (4) < limit (7)$ - recursive case, the println() method will display $120$, derived from a number of calls $(4*5*6*1)$.
+		\item System.out.println(puzzle(0,0))\par
+		The println() method would display $1$ as the $base (0) = limit (0)$.
+	\end{enumerate}
+	\section*{Problem 2: Complete the Java code to recursively evaluate the sum: sum = 1 + 1/2 +
+		1/3 +...+1/n, n > 1.}
+		\begin{lstlisting}[
+		language=Java,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+double sum(int n)	// n>=1
+{
+    if(n == 1)
+        return 1;
+    return 1/n + sum(n-1);
+}
+	\end{lstlisting}
+	\section*{Problem 4: Write a recursive function that finds and returns the minimum element in an array, where the array and its size are given as parameters.}
+	\begin{lstlisting}[
+		language=Java,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+public class FindMin {
+  int findmin(int[] arr, int n) {
+      if (arr == null || arr.length == 0) {
+        throw newIllegalArgumentException("Array must not be null or empty");
+    }		
+      if (n == 1) {
+        return arr[0];
+      }
+    return min(arr[n - 1], findmin(arr, n - 1));
+    }
+  public int min(int a, int b) {
+      if (a > b) {
+        return b;
+      }
+    return a;
+  }
+}
+	\end{lstlisting}
+	\section*{Problem 6: Write a method that receives two integers and returns the largest common divisor. The formula to calculate the Largest common divisor is shown below:}
+	\begin{center}
+		\includegraphics[scale = 1.5]{gcd}
+	\end{center}
+	\begin{lstlisting}[
+	language=Java,
+	showspaces=false,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	commentstyle=\color{gray}
+	]
+public class Gcd {
+    public int gcd(int p, int q) {
+      if (q == 0) {
+        return p;
+      }
+    return gcd(q, p % q);
+    };
+}
+\end{lstlisting}
+	\section*{Problem 8: Write a recursive function to generate all subsets of a given set.}
+	\begin{lstlisting}[
+		language=Java,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+import java.util.ArrayList;
+import java.util.List;
+
+  public static List<List<Integer>> subsets(int[] nums) {
+    List<List<Integer>> result = new ArrayList<>();
+    backtrack(result, new ArrayList<>(), nums, 0);
+      return result;
+    }
+	
+  private static void backtrack(List<List<Integer>> result, List<Integer> 
+  tempList,int[] nums, int start) {
+    result.add(new ArrayList<>(tempList));
+    for (int i = start; i < nums.length; i++{
+      tempList.add(nums[i]);
+      backtrack(result, tempList, nums, i + 1);
+      tempList.remove(tempList.size() - 1);
+    }
+  }
+}
+	\end{lstlisting}
+	\section*{Problem 10: Use recursion to generate a Sierpinski triangle fractal}
+		\begin{lstlisting}[
+		language=Java,
+		showspaces=false,
+		basicstyle=\ttfamily,
+		numbers=left,
+		numberstyle=\tiny,
+		commentstyle=\color{gray}
+		]
+public class SierpinskiRecursive {
+public void printSierpinski(int n, int y) {
+  if (y < 0) {
+    return;
+  }
+  printSpaces(y);
+  printLine(0, n, y);  
+  System.out.println();
+  printSierpinski(n, y - 1);
+}
+
+public void printSpaces(int count) {
+  if (count == 0) {
+    return;
+  }
+  System.out.print(" ");
+  printSpaces(count - 1);
+}
+
+public void printLine(int x, int numberOfRows, int y) {
+  if (x + y >= numberOfRows) {
+  	return;
+  }
+  if ((x & y) != 0) {
+  	System.out.print("  ");
+  } else {
+  	System.out.print("* ");
+  }
+  printLine(x + 1, numberOfRows, y);
+  }
+}	
+	\end{lstlisting}
+
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}

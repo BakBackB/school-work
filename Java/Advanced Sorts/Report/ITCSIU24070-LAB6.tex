@@ -1,0 +1,71 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Algorithms \& Data Structures}}}
+\fancyhead[R]{\textbf{\textit{Lab 6}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\usepackage{array}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Algorithms \& Data Structures} \large{LAB 6}
+		\end{center}
+		\vfill
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+	\section{PartitionApp.java}
+	\subsection{Add counters for the number of comparisons and swaps and display them after partitioning}
+	\includegraphics[width = \textwidth]{par1}
+	\subsection{Investigate the relationship between the index of partitioning, the number of comparison, and the number of swaps.}
+	As the code runs, we can infer that the number of comparison is less than the partition index, while the partition index is greate than or equal the number of swaps.
+	\subsection{Compute the average number of comparisons and swaps over 100 runs.}
+	\includegraphics[width = \textwidth]{par234}
+	\section{Merge Sort}
+	\begin{center}
+		\includegraphics[width = \textwidth]{sort}\par
+		\includegraphics[width = \textwidth]{merge}
+	\end{center}
+	\section{Shell Sort}
+	\begin{center}
+		\includegraphics[width = \textwidth]{shell}
+	\end{center}
+	\section{Quick Sort}
+	\begin{center}
+		\includegraphics[width = \textwidth]{quick}
+	\end{center}
+	Table for analyzing:\par
+	\includegraphics[width = \textwidth]{table}\par
+	This table shows the number of COPIES/COMPARISONS/SWAPS with respect to number of elements in the arrays. As illustrated on the table. Comparing to the simple sort table previously, it is inferred that the advanced sorts take fewer operations than the basic one.
+	\section{Problem 5}
+	
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}

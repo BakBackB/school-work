@@ -1,0 +1,101 @@
+\documentclass[a4paper,12pt]{article} % Hoặc article nếu là sách ngắn
+\usepackage[left=10mm, right=10mm, top=30mm, bottom=30mm]{geometry}
+\usepackage[english, vietnamese]{babel}
+\usepackage{amssymb}
+\usepackage{pdfpages} % Gói để nhúng PDF
+\usepackage{hyperref}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{bigints}
+\usepackage{tikz}
+\usepackage{tcolorbox} 
+\pagestyle{fancy}
+\usepackage{setspace}
+\usepackage{hyperref}
+\onehalfspacing % Giãn dòng 1.5 lần
+\fancyhead[L]{\textbf{\textit{Algorithms \& Data Structures}}}
+\fancyhead[R]{\textbf{\textit{Lab 3}}}
+\fancyfoot[C]{\thepage} % Đánh số trang giữa
+\setlength{\parindent}{0pt} % Lùi đầu dòng
+\setlength{\parskip}{12pt} % Khoảng cách giữa các đoạn
+\usepackage{array}
+\begin{document}
+	\setstretch{1.25}
+	\begin{titlepage}
+		\begin{center}
+			\Large{Trường Đại Học Quốc Tế - ĐHQG TP.HCM}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Huge{\textbf{LAB REPORT}}}\\[0.5cm]
+			\date{-5ex}
+			\Large{Course: Algorithms \& Data Structures} \large{LAB 3}
+		\end{center}
+		\vspace*{\fill}
+		\large{\textbf{Full Name}: Trần Minh Phúc}\dotfill\par
+		\noindent \large{\textbf{Student's ID}: ITCSIU24070}\dotfill
+	\end{titlepage}
+	\section{Problem 1}
+	\Large{\textbf{Write a program to}}
+	\subsection{Convert a decimal number and convert it to octal form}
+	\begin{center}
+		\includegraphics[scale = 0.3]{dectobin}
+	\end{center}
+	\subsection{Concatenate two stacks}
+	\begin{center}
+		\includegraphics[scale = 0.3]{concatenate}
+	\end{center}
+	\subsection{Determine if the contents of one stack are identical to that of another}
+	\begin{center}
+		\includegraphics[scale = 0.355]{identical}
+	\end{center}
+	\section{Problem 2}
+	\begin{center}
+		\includegraphics[scale = 0.25]{infixtopostfix}\par
+		\includegraphics[scale=1.75]{infixtopostfixtoutput}
+	\end{center}
+	\section{QueueApp.java}
+	\subsection{Method to display the queue array and the front and rear indices}
+	\begin{center}
+		\includegraphics[scale = 0.38]{queuemain}
+		\includegraphics[scale = 0.625]{queuearraydisplay}
+		\includegraphics[scale = 1.5]{queuedisplayoutput}
+	\end{center}
+	In this scenario, as the underlying array's index get to the wraparound, it is being reset so that the queue can add item at the rear.
+	\subsection{Method to display the queue using loops}
+	\begin{center}
+		\includegraphics[scale = 0.35]{queuedisplay}
+	\end{center}
+	\subsection{Simulation}
+	\begin{center}
+		\includegraphics[scale = 0.325]{simulation}
+		\includegraphics[scale = 1.25]{simulationoutput}
+	\end{center}
+	\section{StackApp.java}
+	\subsection{Method to display the stack array and the stack itself}
+	\begin{center}
+		\includegraphics[scale = 0.5]{stackdisplay}
+	\end{center}
+	\section{PriorityQApp.java}
+	\subsection{Method to display the queue}
+	\begin{center}
+		\includegraphics[scale = 0.435]{priorityqdisplay}
+	\end{center}
+	\subsection{Compare queue and priority queue insertion method}
+	For inserting at the rear using Priority Queue, it is less efficient than basic Queue since its insertion also sorts the queue.
+	\begin{center}
+		\includegraphics[scale = 0.35]{priorityqinsert}
+	\end{center}
+	\subsection{Priority simulation}
+	\begin{center}
+		\includegraphics[scale = 0.3]{prioritysimulation}
+	\end{center}
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-8,0) -- (-3.5,0);
+			\node at (0,0) {\textit{This is the end of the report}};
+			\draw (3.5,0) -- (8,0);
+		\end{tikzpicture}
+	\end{center}
+\end{document}
